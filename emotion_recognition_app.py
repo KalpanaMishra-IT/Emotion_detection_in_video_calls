@@ -58,5 +58,5 @@ def main():
                 emotion = predict_emotion("temp_audio.wav")
             st.success(f"Predicted Emotion: *{emotion}*")
 
-if _name_ == "_main_":
+if __name__ == "__main__":
     main()

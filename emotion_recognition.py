@@ -1,3 +1,4 @@
+import os
 import numpy as np
 import librosa
 import tensorflow as tf
@@ -6,16 +7,21 @@ from keras.models import Sequential
 from keras.layers import Conv1D, MaxPooling1D, Flatten, Dense, Dropout, Activation
 from keras.utils import to_categorical
 
-# Load dataset (use your own audio dataset with labeled emotions)
+# Directory containing audio files
+audio_dir = r"C:\Users\Toriichi\Desktop\Emotion Detection\Emotion_detection_in_video_calls\wav"
+
+# List all .wav files in the directory
+file_paths = [os.path.join(audio_dir, file) for file in os.listdir(audio_dir) if file.endswith(".wav")]
+
+# Function to extract MFCC features
 def load_audio_features(file_path):
     y, sr = librosa.load(file_path, duration=3, offset=0.5)
     mfccs = np.mean(librosa.feature.mfcc(y=y, sr=sr, n_mfcc=40).T, axis=0)
     return mfccs
 
-# Replace this with your dataset
+# Load dataset
 data = []  # List to hold features
 labels = []  # List to hold labels (e.g., 0 for 'angry', 1 for 'happy', etc.)
-file_paths = ["audio1.wav", "audio2.wav"]  # Add actual paths to your dataset
 
 for i, file_path in enumerate(file_paths):
     features = load_audio_features(file_path)
